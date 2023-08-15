@@ -111,7 +111,6 @@ function WeatherSearch() {
               void debouncedDisplayCities(e.currentTarget.value);
             }}
             onBlur={() => {
-              // to avoid instantly closing the list of cities
               setTimeout(() => {
                 setCityList([]);
               }, 250);
