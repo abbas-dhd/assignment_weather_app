@@ -141,36 +141,38 @@ function WeatherResults() {
           </div>
           <h2>{TITLE_WEATHER_APP}</h2>
         </div>
-        <div className={styles.card_body}>
+        <div className={styles.card_container}>
           {isLoading ? (
             <Loader />
           ) : (
             <>
-              <div className={styles.weather_icon}>
-                <img
-                  src={`${WEATHER_ICON_BASE_URL}${weatherData[0].WeatherIcon}.svg`}
-                  alt={weatherData[0].IconPhrase}
-                  title={weatherData[0].IconPhrase}
-                />
-              </div>
-              <div className={styles.weather_temp}>
-                <h2>
-                  {Math.round(weatherData[0].Temperature.Value)}
-                  <span>{'°C'}</span>
-                </h2>
-                <p>{weatherData[0].IconPhrase}</p>
-              </div>
-              <div className={styles.location}>
-                <div>
-                  <img src={locationIcon} alt="location-icon" />
+              <div className={styles.card_body}>
+                <div className={styles.weather_icon}>
+                  <img
+                    src={`${WEATHER_ICON_BASE_URL}${weatherData[0].WeatherIcon}.svg`}
+                    alt={weatherData[0].IconPhrase}
+                    title={weatherData[0].IconPhrase}
+                  />
                 </div>
-                <p
-                  title={`${city?.LocalizedName || ''}, ${
-                    city?.Country.LocalizedName || ''
-                  }`}
-                >
-                  {city?.LocalizedName}, {city?.Country.LocalizedName}
-                </p>
+                <div className={styles.weather_temp}>
+                  <h2>
+                    {Math.round(weatherData[0].Temperature.Value)}
+                    <span>{'°C'}</span>
+                  </h2>
+                  <p>{weatherData[0].IconPhrase}</p>
+                </div>
+                <div className={styles.location}>
+                  <div>
+                    <img src={locationIcon} alt="location-icon" />
+                  </div>
+                  <p
+                    title={`${city?.LocalizedName || ''}, ${
+                      city?.Country.LocalizedName || ''
+                    }`}
+                  >
+                    {city?.LocalizedName}, {city?.Country.LocalizedName}
+                  </p>
+                </div>
               </div>
               <div className={styles.card_footer}>
                 <div className={styles.block}>
