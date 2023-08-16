@@ -1,6 +1,7 @@
 import { CityType } from '../../types/weatherTypes';
 
-const baseUrl = 'http://dataservice.accuweather.com/';
+const BASE_URL = 'http://dataservice.accuweather.com/';
+const API_KEY = import.meta.env.VITE_ACCUWEATHER_API_KEY as string;
 const endpoints = {
   autoComplete: 'locations/v1/cities/autocomplete',
   forecast_current_hour: 'forecasts/v1/hourly/1hour/',
@@ -8,12 +9,15 @@ const endpoints = {
   get_city: 'locations/v1/',
 };
 
-const apiKey = import.meta.env.VITE_ACCUWEATHER_API_KEY as string;
-
+/**
+ * Fetches the list of cities that match the search query
+ * @param query search query
+ * @returns array of cities
+ */
 const autoComplete = async (query: string) => {
   const result = fetch(
-    `${baseUrl}${endpoints.autoComplete}?${new URLSearchParams({
-      apikey: apiKey,
+    `${BASE_URL}${endpoints.autoComplete}?${new URLSearchParams({
+      apikey: API_KEY,
       q: query,
     }).toString()}`
   )
@@ -26,12 +30,17 @@ const autoComplete = async (query: string) => {
   return await result;
 };
 
+/**
+ * Fetches the current weather data of the city
+ * @param cityKey key of the city
+ * @returns current weather data of the city
+ */
 const getCurrentWeatherData = async (cityKey: string) => {
   const result = fetch(
-    `${baseUrl}${
+    `${BASE_URL}${
       endpoints.forecast_current_hour
     }${cityKey}?${new URLSearchParams({
-      apikey: apiKey,
+      apikey: API_KEY,
       details: 'true',
       metric: 'true',
     }).toString()}`
@@ -45,10 +54,16 @@ const getCurrentWeatherData = async (cityKey: string) => {
   return await result;
 };
 
+/**
+ * Fetches the city key from the latitude and longitudes
+ * @param lat Latitude
+ * @param lon Longitude
+ * @returns city key
+ */
 const getCityKeyFromLatLon = async (lat: string, lon: string) => {
   const result = fetch(
-    `${baseUrl}${endpoints.geo_position}?${new URLSearchParams({
-      apikey: apiKey,
+    `${BASE_URL}${endpoints.geo_position}?${new URLSearchParams({
+      apikey: API_KEY,
       q: `${lat},${lon}`,
     }).toString()}`
   )
@@ -60,10 +75,16 @@ const getCityKeyFromLatLon = async (lat: string, lon: string) => {
 
   return await result;
 };
+
+/**
+ * Fetches the city data from the city key
+ * @param key city key
+ * @returns city data
+ */
 const getCityFromKey = async (key: string) => {
   const result = fetch(
-    `${baseUrl}${endpoints.get_city}${key}?${new URLSearchParams({
-      apikey: apiKey,
+    `${BASE_URL}${endpoints.get_city}${key}?${new URLSearchParams({
+      apikey: API_KEY,
     }).toString()}`
   )
     .then((res) => res.json())
